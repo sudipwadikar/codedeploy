@@ -41,12 +41,13 @@ resource "aws_launch_configuration" "web_launch_config" {
   user_data = <<-EOF
               #!/bin/bash
               sudo -i
-              sudo yum install httpd
+              sudo yum update -y
+              sudo yum install httpd -y 
               sudo systemctl start httpd
               sudo systemctl enable httpd
               sudo systemctl status httpd
-              sudo yum install amazon-linux-extras php
-              sudo yum install php-curl php-mbstring php-intl php-opcache php-soap php-gd php-xml php-mysqli
+              sudo yum install amazon-linux-extras php -y
+              sudo yum install php-curl php-mbstring php-intl php-opcache php-soap php-gd php-xml php-mysqli -y
               php –version
               sudo systemctl restart httpd
               EOF
