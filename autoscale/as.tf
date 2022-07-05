@@ -38,6 +38,18 @@ resource "aws_launch_configuration" "web_launch_config" {
   associate_public_ip_address = true
   security_groups             = [var.Allow_Web_Traffic_id]
 
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo -i
+              sudo yum install httpd
+              sudo systemctl start httpd
+              sudo systemctl enable httpd
+              sudo systemctl status httpd
+              sudo yum install amazon-linux-extras php
+              sudo yum install php-curl php-mbstring php-intl php-opcache php-soap php-gd php-xml php-mysqli
+              php –version
+              sudo systemctl restart httpd
+              EOF
   
 lifecycle {
     create_before_destroy = true
